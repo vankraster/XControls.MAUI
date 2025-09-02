@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XControls.Maui.Sample", "XControls.Maui.Sample.csproj", "{EACF129B-5322-4831-9F19-701CB0D971BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XControls.Maui", "..\src\XControls.Maui.csproj", "{7C992BDC-5E24-10A3-392A-C04C8E3D3D71}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EACF129B-5322-4831-9F19-701CB0D971BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EACF129B-5322-4831-9F19-701CB0D971BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EACF129B-5322-4831-9F19-701CB0D971BF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{EACF129B-5322-4831-9F19-701CB0D971BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EACF129B-5322-4831-9F19-701CB0D971BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EACF129B-5322-4831-9F19-701CB0D971BF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7C992BDC-5E24-10A3-392A-C04C8E3D3D71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C992BDC-5E24-10A3-392A-C04C8E3D3D71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C992BDC-5E24-10A3-392A-C04C8E3D3D71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C992BDC-5E24-10A3-392A-C04C8E3D3D71}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D956444D-7DB7-46D9-99AF-2AAD4F74C590}
+	EndGlobalSection
+EndGlobal
