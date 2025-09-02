@@ -1,26 +1,29 @@
-﻿using System;
-using Microsoft.Maui.Controls;
+﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using System;
+using System.Security.AccessControl;
 
 namespace XControls.Maui
 {
     public class XSwitchDraw : GraphicsView
     {
         // Starea switch-ului
-        private bool _isOn = false;
-        public bool IsOn
+        private bool _isToggled = false;
+        public bool IsToggled
         {
-            get => _isOn;
+            get => _isToggled;
             set
             {
-                if (_isOn != value)
+                if (_isToggled != value)
                 {
-                    _isOn = value;
+                    _isToggled = value;
                     AnimateKnob(value ? 1f : 0f);
-                    Toggled?.Invoke(this, _isOn);
+                    Toggled?.Invoke(this, _isToggled);
                 }
             }
         }
+         
+        public TSize Size { get; set; } = TSize.Medium;
 
         // Eveniment toggled
         public event EventHandler<bool> Toggled;
@@ -31,14 +34,29 @@ namespace XControls.Maui
 
         public XSwitchDraw()
         {
-            HeightRequest = 40;
-            WidthRequest = 100;
+
+            if (Size == TSize.Small)
+            {
+                HeightRequest = 32;
+                WidthRequest = 72;
+            }
+            else if (Size == TSize.Medium)
+            {
+                HeightRequest = 40;
+                WidthRequest = 100;
+            }
+            else if (Size == TSize.Large)
+            {
+                HeightRequest = 44;
+                WidthRequest = 120;
+            }
+
 
             Drawable = new SwitchDrawable(() => _knobPos);
 
             // Tap
             var tap = new TapGestureRecognizer();
-            tap.Tapped += (s, e) => IsOn = !IsOn;
+            tap.Tapped += (s, e) => IsToggled = !IsToggled;
             GestureRecognizers.Add(tap);
 
             // Pan
@@ -48,7 +66,7 @@ namespace XControls.Maui
 
             SizeChanged += (s, e) =>
             {
-                _knobPos = IsOn ? 1f : 0f;
+                _knobPos = IsToggled ? 1f : 0f;
                 Invalidate();
             };
         }
@@ -105,10 +123,10 @@ namespace XControls.Maui
                     anim.Commit(this, "SwitchAnim", length: 200, easing: Easing.CubicInOut);
 
                     // Actualizează starea
-                    if (_isOn != shouldBeOn)
+                    if (_isToggled != shouldBeOn)
                     {
-                        _isOn = shouldBeOn;
-                        Toggled?.Invoke(this, _isOn);
+                        _isToggled = shouldBeOn;
+                        Toggled?.Invoke(this, _isToggled);
                     }
                     break;
 
@@ -172,4 +190,3 @@ namespace XControls.Maui
     }
 }
 
- 

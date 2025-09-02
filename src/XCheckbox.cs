@@ -58,9 +58,12 @@
 
             public void Draw(ICanvas canvas, RectF dirtyRect)
             {
-                // fundal alb
+                float cornerRadius = 6f;
+
+                //// fundal alb
                 canvas.FillColor = Colors.White;
-                canvas.FillRectangle(dirtyRect);
+                //canvas.FillRectangle(dirtyRect);
+                canvas.FillRoundedRectangle(5, 5, dirtyRect.Width - 10, dirtyRect.Height - 10, cornerRadius);
 
                 // border cu colțuri rotunjite
                 if (IsChecked)
@@ -68,7 +71,6 @@
                 else
                     canvas.StrokeColor = Colors.Gray;
                 canvas.StrokeSize = 2;
-                float cornerRadius = 6f;
                 canvas.DrawRoundedRectangle(5, 5, dirtyRect.Width - 10, dirtyRect.Height - 10, cornerRadius);
 
 

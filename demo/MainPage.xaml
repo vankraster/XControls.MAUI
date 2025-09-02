@@ -9,10 +9,13 @@
            Padding="30,0"  
            Spacing="25">  
 
-           <ctrls:XSwitchDraw IsOn="True" />  
+           <ctrls:XSwitchDraw IsToggled="True" Size="Small" />  
+           <ctrls:XSwitchDraw IsToggled="True" Size="Medium" />  
+           <ctrls:XSwitchDraw IsToggled="True" Size="Large" />  
            <ctrls:XCheckbox IsChecked="True" />
-           
-       </VerticalStackLayout>  
+
+            <Switch IsToggled="True"/>
+        </VerticalStackLayout>  
    </ScrollView>  
 
 </ContentPage>
