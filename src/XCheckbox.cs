@@ -88,7 +88,7 @@
         private class CheckBoxDrawable : IDrawable
         {
             public bool IsChecked { get; set; }
-            public bool IsEnabled { get; set; }
+            public bool IsEnabled { get; set; } = true;
             public float ClickAnimationProgress { get; set; }
 
             public void Draw(ICanvas canvas, RectF dirtyRect)
