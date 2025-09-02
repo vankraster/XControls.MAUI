@@ -11,10 +11,10 @@
 
            <ctrls:XSwitchDraw IsToggled="True" Size="Small" />  
            <ctrls:XSwitchDraw IsToggled="True" Size="Medium" />  
-           <ctrls:XSwitchDraw IsToggled="True" Size="Large" />  
+           <ctrls:XSwitchDraw IsToggled="True" Size="Large" IsEnabled="False"/>  
            <ctrls:XCheckbox IsChecked="True" />
-
-            <Switch IsToggled="True"/>
+           <ctrls:XCheckbox IsChecked="True" IsEnabled="False" />
+ 
         </VerticalStackLayout>  
    </ScrollView>  
 

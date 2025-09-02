@@ -1,9 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using System;
-using System.Security.AccessControl;
-
-namespace XControls.Maui
+﻿namespace XControls.Maui
 {
     public class XSwitchDraw : GraphicsView
     {
@@ -22,8 +17,48 @@ namespace XControls.Maui
                 }
             }
         }
-         
-        public TSize Size { get; set; } = TSize.Medium;
+
+        public static readonly BindableProperty SizeProperty =
+              BindableProperty.Create(
+                  nameof(Size),
+                  typeof(TSize),
+                  typeof(XSwitchDraw),
+                  TSize.Small, // default
+                  propertyChanged: OnSizeChanged
+              );
+
+        public TSize Size
+        {
+            get => (TSize)GetValue(SizeProperty);
+            set => SetValue(SizeProperty, value);
+        }
+
+        private static void OnSizeChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var control = (XSwitchDraw)bindable;
+            control.ApplySize((TSize)newValue);
+        }
+
+        public static readonly BindableProperty IsEnabledProperty =
+                BindableProperty.Create(
+                    nameof(IsEnabled),
+                    typeof(bool),
+                    typeof(XSwitchDraw),
+                    true, // valoarea default
+                    propertyChanged: OnIsEnabledChanged
+                );
+
+        public new bool IsEnabled
+        {
+            get => (bool)GetValue(IsEnabledProperty);
+            set => SetValue(IsEnabledProperty, value);
+        }
+
+        private static void OnIsEnabledChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var control = (XSwitchDraw)bindable;
+            control.UpdateEnabledState((bool)newValue);
+        }
 
         // Eveniment toggled
         public event EventHandler<bool> Toggled;
@@ -34,29 +69,21 @@ namespace XControls.Maui
 
         public XSwitchDraw()
         {
-
-            if (Size == TSize.Small)
-            {
-                HeightRequest = 32;
-                WidthRequest = 72;
-            }
-            else if (Size == TSize.Medium)
-            {
-                HeightRequest = 40;
-                WidthRequest = 100;
-            }
-            else if (Size == TSize.Large)
-            {
-                HeightRequest = 44;
-                WidthRequest = 120;
-            }
+            //initialize to default size
+            ApplySize(this.Size);
 
 
             Drawable = new SwitchDrawable(() => _knobPos);
 
             // Tap
             var tap = new TapGestureRecognizer();
-            tap.Tapped += (s, e) => IsToggled = !IsToggled;
+            tap.Tapped += (s, e) =>
+            {
+                if (!IsEnabled)
+                    return;
+
+                IsToggled = !IsToggled;
+            };
             GestureRecognizers.Add(tap);
 
             // Pan
@@ -69,6 +96,31 @@ namespace XControls.Maui
                 _knobPos = IsToggled ? 1f : 0f;
                 Invalidate();
             };
+        }
+
+        private void ApplySize(TSize size)
+        {
+            switch (size)
+            {
+                case TSize.Small:
+                    HeightRequest = 32;
+                    WidthRequest = 72;
+                    break;
+                case TSize.Medium:
+                    HeightRequest = 40;
+                    WidthRequest = 100;
+                    break;
+                case TSize.Large:
+                    HeightRequest = 44;
+                    WidthRequest = 120;
+                    break;
+
+            }
+        }
+
+        private void UpdateEnabledState(bool isEnabled)
+        {
+            this.Invalidate();
         }
 
         private void AnimateKnob(float targetPos)
@@ -84,6 +136,9 @@ namespace XControls.Maui
 
         private void OnPanUpdated(object sender, PanUpdatedEventArgs e)
         {
+            if (!IsEnabled)
+                return;
+
             switch (e.StatusType)
             {
                 case GestureStatus.Started:

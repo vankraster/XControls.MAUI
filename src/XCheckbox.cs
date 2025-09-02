@@ -12,6 +12,31 @@
                 false,
                 propertyChanged: OnIsCheckedChanged);
 
+
+        public static readonly BindableProperty IsEnabledProperty =
+              BindableProperty.Create(
+                  nameof(IsEnabled),
+                  typeof(bool),
+                  typeof(XCheckbox),
+                  true, // valoarea default
+                  propertyChanged: OnIsEnabledChanged
+              );
+
+        public new bool IsEnabled
+        {
+            get => (bool)GetValue(IsEnabledProperty);
+            set => SetValue(IsEnabledProperty, value);
+        }
+
+        private static void OnIsEnabledChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var control = (XCheckbox)bindable;
+            control.UpdateEnabledState((bool)newValue);
+        }
+
+
+
+
         public bool IsChecked
         {
             get => (bool)GetValue(IsCheckedProperty);
@@ -31,8 +56,17 @@
             GestureRecognizers.Add(tap);
         }
 
+        private void UpdateEnabledState(bool isEnabled)
+        {
+            this._drawable.IsEnabled = isEnabled;
+            this.Invalidate();
+        }
+
         private async void OnTapped(object sender, EventArgs e)
         {
+            if (!IsEnabled)
+                return;
+
             IsChecked = !IsChecked;
 
             // rulează un mic efect de puls la click
@@ -54,14 +88,17 @@
         private class CheckBoxDrawable : IDrawable
         {
             public bool IsChecked { get; set; }
+            public bool IsEnabled { get; set; }
             public float ClickAnimationProgress { get; set; }
 
             public void Draw(ICanvas canvas, RectF dirtyRect)
             {
                 float cornerRadius = 6f;
 
-                //// fundal alb
-                canvas.FillColor = Colors.White;
+                if (IsEnabled) // fundal alb
+                    canvas.FillColor = Colors.White;
+                else
+                    canvas.FillColor = Colors.Gray;
                 //canvas.FillRectangle(dirtyRect);
                 canvas.FillRoundedRectangle(5, 5, dirtyRect.Width - 10, dirtyRect.Height - 10, cornerRadius);
 
